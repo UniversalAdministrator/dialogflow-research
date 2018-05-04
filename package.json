@@ -1,5 +1,5 @@
 {
-  "name": "dialogflow",
+  "name": "dialogflow-research",
   "version": "1.0.0",
   "description": "dialogflow research",
   "main": "index.js",
@@ -8,18 +8,21 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mrdulin/dialogflow.git"
+    "url": "git+https://github.com/mrdulin/dialogflow-research.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/mrdulin/dialogflow/issues"
+    "url": "https://github.com/mrdulin/dialogflow-research/issues"
   },
-  "homepage": "https://github.com/mrdulin/dialogflow#readme",
+  "homepage": "https://github.com/mrdulin/dialogflow-research#readme",
   "devDependencies": {
     "eslint": "^4.19.1",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-plugin-import": "^2.9.0"
+  },
+  "dependencies": {
+    "dialogflow": "^0.3.0"
   }
 }
