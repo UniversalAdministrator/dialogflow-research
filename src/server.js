@@ -28,7 +28,8 @@ app.get('/', (req, res) => {
 });
 
 app.post('/action', (req, res) => {
-  const { query } = req.body;
+  const { query, queryResult } = req.body;
+  const { queryText } = queryResult;
 
   console.log(req.body);
 
@@ -38,7 +39,7 @@ app.post('/action', (req, res) => {
     session: sessionPath,
     queryInput: {
       text: {
-        text: query,
+        text: queryText,
         languageCode
       }
     }
