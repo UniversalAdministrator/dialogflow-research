@@ -6,7 +6,7 @@ dialogflow research
 
 这是一个部署在 heroku 上的 nodejs webhook 应用程序，也就是 dialogflow 的 fulfillment
 
-![fulfillment](https://ws3.sinaimg.cn/large/006tKfTcgy1fqzbxpy6ovj30jf13bt9u.jpg)
+![fulfillment](https://ws2.sinaimg.cn/large/006tKfTcgy1fqzlmeah6wj31kw0tvgp7.jpg)
 
 dialogflow 的 fulfillment 的 webhook 的 URL 地址是: 部署在 heroku 上的应用程序的外网地址，例如https://safe-cove-50851.herokuapp.com/
 
