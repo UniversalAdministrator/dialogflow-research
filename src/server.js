@@ -30,6 +30,8 @@ app.get('/', (req, res) => {
 app.post('/action', (req, res) => {
   const { query } = req.body;
 
+  console.log(req.body);
+
   console.log('/action');
 
   const request = {
