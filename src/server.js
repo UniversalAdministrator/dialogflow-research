@@ -3,6 +3,8 @@ const dialogflow = require('dialogflow');
 const bodyParser = require('body-parser');
 const path = require('path');
 
+const weatherService = require('./weather.service');
+
 const app = express();
 const PORT = process.env.PORT || 5000;
 
@@ -27,41 +29,53 @@ app.get('/', (req, res) => {
   `);
 });
 
+// How's the weather in Denver tomorrow
+
 app.post('/action', (req, res) => {
-  const { query, queryResult } = req.body;
+  const { query, queryResult = {} } = req.body;
   const { queryText } = queryResult;
 
-  console.log(req.body);
+  const { parameters } = queryResult;
+  const { fields } = parameters;
+  const date = fields.date.stringValue;
+  const city = fields['geo-city'].stringValue;
 
-  console.log('/action');
-
-  const request = {
-    session: sessionPath,
-    queryInput: {
-      text: {
-        text: queryText,
-        languageCode
-      }
-    }
-  };
-
-  sessionClient
-    .detectIntent(request)
-    .then(responses => {
-      console.log('Detected intent');
-      const result = responses[0].queryResult;
-      console.log(`  Query: ${result.queryText}`);
-      console.log(`  Response: ${result.fulfillmentText}`);
-      res.send(result.fulfillmentText);
-      if (result.intent) {
-        console.log(`  Intent: ${result.intent.displayName}`);
-      } else {
-        console.log('No intent matched.');
-      }
+  return weatherService
+    .callWeatherApi(city, date)
+    .then(output => {
+      res.json({ fulfillmentText: output });
     })
     .catch(err => {
-      console.error(err);
+      res.json({ fulfillmentText: "I don't know the weather but I hope it's good!" });
     });
+
+  // const request = {
+  //   session: sessionPath,
+  //   queryInput: {
+  //     text: {
+  //       text: query || queryText,
+  //       languageCode
+  //     }
+  //   }
+  // };
+
+  // sessionClient
+  //   .detectIntent(request)
+  //   .then(responses => {
+  //     console.log('Detected intent');
+  //     const result = responses[0].queryResult;
+  //     console.log(`  Query: ${result.queryText}`);
+  //     console.log(`  Response: ${result.fulfillmentText}`);
+  //     res.send(result.fulfillmentText);
+  //     if (result.intent) {
+  //       console.log(`  Intent: ${result.intent.displayName}`);
+  //     } else {
+  //       console.log('No intent matched.');
+  //     }
+  //   })
+  //   .catch(err => {
+  //     console.error(err);
+  //   });
 });
 
 app.listen(PORT, () => {
