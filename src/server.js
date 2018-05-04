@@ -2,7 +2,7 @@ const express = require('express');
 const dialogflow = require('dialogflow');
 
 const app = express();
-const port = 3000;
+const PORT = process.env.PORT || 5000;
 
 const projectId = 'weather-f549d';
 const sessionId = 'quickstart-session-id';
@@ -47,6 +47,6 @@ app.post('/action', (req, res) => {
     });
 });
 
-app.listen(port, () => {
-  console.log(`Server is listening on http://localhost:${port}`);
+app.listen(PORT, () => {
+  console.log(`Server is listening on http://localhost:${PORT}`);
 });
