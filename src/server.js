@@ -38,9 +38,8 @@ app.post('/action', (req, res) => {
   console.log('queryResult:', queryResult);
 
   const { parameters } = queryResult;
-  const { fields } = parameters;
-  const date = fields.date.stringValue;
-  const city = fields['geo-city'].stringValue;
+  const date = parameters.date;
+  const city = parameters['geo-city'];
 
   return weatherService
     .callWeatherApi(city, date)
