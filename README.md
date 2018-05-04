@@ -2,11 +2,25 @@
 
 dialogflow research
 
-## How to use
+## Introduction
 
-```bash
-export GOOGLE_APPLICATION_CREDENTIALS="/Users/ldu020/workspace/dialogflow/weather-f1f38a2189f9.json"
-```
+这是一个部署在 heroku 上的 nodejs webhook 应用程序，也就是 dialogflow 的 fulfillment
+
+![fulfillment](https://ws3.sinaimg.cn/large/006tKfTcgy1fqzbxpy6ovj30jf13bt9u.jpg)
+
+dialogflow 的 fulfillment 的 webhook 的 URL 地址是: 部署在 heroku 上的应用程序的外网地址，例如https://safe-cove-50851.herokuapp.com/
+
+但是这里为什么 URL 的 Path 是`/action`呢？
+
+因为 dialogflow fulfillment 的 webhook 需要符合一定的标准，或者说要求，详见https://dialogflow.com/docs/fulfillment
+
+还需要在 dialogflow 的 intents 中开启 webhook
+
+![](https://ws2.sinaimg.cn/large/006tKfTcgy1fqzl8d2ijaj31kw0tvadn.jpg)
+
+最后的流程是这样：
+
+用户在 dialogflow 的测试控制台中输入"How's the weather in Denver tomorrow" ==> dialogflow 的 agent 会进行自然语言分析，意图检测等，例如，收集用户自然语言中的 entities(日期，城市)，转换成 request body 数据 ==>  发送 POST 请求（带着日期，城市等参数）到 fulfillment 的部署在 heroku 上的 webhook ==> 触发 webhook，提取日期，城市参数，将这些参数作为查询字符串调用第三方天气服务，获取天气信息 ==> 返回给 dialogflow 的测试控制台
 
 ## GCP
 
@@ -91,7 +105,15 @@ Error: Unexpected error while acquiring application default credentials: Could n
 
 解决：
 
-终端中执行`export GOOGLE_APPLICATION_CREDENTIALS="/Users/ldu020/workspace/dialogflow/weather-f1f38a2189f9.json"`，设置 `GOOGLE_APPLICATION_CREDENTIALS` 环境变量
+终端中执行`export GOOGLE_APPLICATION_CREDENTIALS="/Users/ldu020/workspace/dialogflow/weather-f1f38a2189f9.json"`，设置 `GOOGLE_APPLICATION_CREDENTIALS` 环境变量；
+
+或者指定秘钥文件如下：
+
+```js
+new dialogflow.SessionsClient({
+  keyFilename: path.resolve(__dirname, '../weather-f1f38a2189f9.json')
+});
+```
 
 ## 参考
 

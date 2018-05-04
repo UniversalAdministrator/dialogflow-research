@@ -10,7 +10,8 @@
     "no-unused-vars": "off",
     "no-mixed-operators": "off",
     "camelcase": "off",
-    "function-paren-newline": "off"
+    "function-paren-newline": "off",
+    "prefer-destructuring": "off"
   },
   "env": {
     "node": true,
