@@ -35,6 +35,8 @@ app.post('/action', (req, res) => {
   const { query, queryResult = {} } = req.body;
   const { queryText } = queryResult;
 
+  console.log('queryResult:', queryResult);
+
   const { parameters } = queryResult;
   const { fields } = parameters;
   const date = fields.date.stringValue;
