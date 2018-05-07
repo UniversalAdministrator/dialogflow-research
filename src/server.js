@@ -29,7 +29,7 @@ app.get('/', (req, res) => {
   `);
 });
 
-app.get('/query', (req, res) => {
+app.post('/query', (req, res) => {
   const { query } = req.body;
 
   const request = {
