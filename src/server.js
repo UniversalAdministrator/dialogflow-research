@@ -23,16 +23,46 @@ app.use(bodyParser.json(), bodyParser.urlencoded({ extended: false }));
 
 app.get('/', (req, res) => {
   res.send(`
-    <form action="/action" method="POST">
+    <form action="/query" method="POST">
       <input type="text" name='query' placeholder='type something about weather'/>
     </form>
   `);
 });
 
-// How's the weather in Denver tomorrow
+app.get('/query', (req, res) => {
+  const { query } = req.body;
 
+  const request = {
+    session: sessionPath,
+    queryInput: {
+      text: {
+        text: query,
+        languageCode
+      }
+    }
+  };
+  sessionClient
+    .detectIntent(request)
+    .then(responses => {
+      console.log('Detected intent');
+      const result = responses[0].queryResult;
+      console.log(`  Query: ${result.queryText}`);
+      console.log(`  Response: ${result.fulfillmentText}`);
+      res.send(result.fulfillmentText);
+      if (result.intent) {
+        console.log(`  Intent: ${result.intent.displayName}`);
+      } else {
+        console.log('No intent matched.');
+      }
+    })
+    .catch(err => {
+      console.error(err);
+    });
+});
+
+// How's the weather in Denver tomorrow
 app.post('/action', (req, res) => {
-  const { query, queryResult = {} } = req.body;
+  const { queryResult = {} } = req.body;
   const { queryText } = queryResult;
 
   console.log('queryResult:', queryResult);
@@ -49,34 +79,6 @@ app.post('/action', (req, res) => {
     .catch(err => {
       res.json({ fulfillmentText: "I don't know the weather but I hope it's good!" });
     });
-
-  // const request = {
-  //   session: sessionPath,
-  //   queryInput: {
-  //     text: {
-  //       text: query || queryText,
-  //       languageCode
-  //     }
-  //   }
-  // };
-
-  // sessionClient
-  //   .detectIntent(request)
-  //   .then(responses => {
-  //     console.log('Detected intent');
-  //     const result = responses[0].queryResult;
-  //     console.log(`  Query: ${result.queryText}`);
-  //     console.log(`  Response: ${result.fulfillmentText}`);
-  //     res.send(result.fulfillmentText);
-  //     if (result.intent) {
-  //       console.log(`  Intent: ${result.intent.displayName}`);
-  //     } else {
-  //       console.log('No intent matched.');
-  //     }
-  //   })
-  //   .catch(err => {
-  //     console.error(err);
-  //   });
 });
 
 app.listen(PORT, () => {
