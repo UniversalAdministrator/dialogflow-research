@@ -48,7 +48,6 @@ app.post('/query', (req, res) => {
       const result = responses[0].queryResult;
       console.log(`  Query: ${result.queryText}`);
       console.log(`  Response: ${result.fulfillmentText}`);
-      res.send(result.fulfillmentText);
       if (result.intent) {
         console.log(`  Intent: ${result.intent.displayName}`);
       } else {

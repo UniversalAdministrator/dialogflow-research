@@ -2,6 +2,8 @@
 
 dialogflow research
 
+Dialogflow 是一款企业级 NLU 平台，可让开发人员轻松设计并将会话用户界面集成到移动应用程序，Web 应用程序，设备和机器人中。
+
 ## Introduction
 
 这是一个部署在 heroku 上的 nodejs webhook 应用程序，也就是 dialogflow 的 fulfillment
