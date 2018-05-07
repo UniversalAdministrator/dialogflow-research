@@ -29,6 +29,7 @@ app.get('/', (req, res) => {
   `);
 });
 
+// How's the weather in Denver tomorrow
 app.post('/query', (req, res) => {
   const { query } = req.body;
 
@@ -62,7 +63,6 @@ app.post('/query', (req, res) => {
     });
 });
 
-// How's the weather in Denver tomorrow
 app.post('/action', (req, res) => {
   const { queryResult = {} } = req.body;
   const { queryText } = queryResult;
