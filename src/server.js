@@ -2,6 +2,7 @@ const express = require('express');
 const dialogflow = require('dialogflow');
 const bodyParser = require('body-parser');
 const path = require('path');
+const chatbase = require('@google/chatbase');
 
 const weatherService = require('./weather.service');
 
@@ -10,6 +11,7 @@ const PORT = process.env.PORT || 5000;
 
 const projectId = 'weather-f549d';
 const sessionId = 'quickstart-session-id';
+const chatbaseApiKey = '0dd0c7e2-9ca6-46f5-b540-9c8e24c46fca';
 
 const languageCode = 'en-US';
 
@@ -18,6 +20,8 @@ const sessionClient = new dialogflow.SessionsClient({
   keyFilename: path.resolve(__dirname, '../weather-f1f38a2189f9.json')
 });
 const sessionPath = sessionClient.sessionPath(projectId, sessionId);
+
+chatbase.setApiKey(chatbaseApiKey).setPlatform('dialogflow');
 
 app.use(bodyParser.json(), bodyParser.urlencoded({ extended: false }));
 
@@ -54,7 +58,18 @@ app.post('/query', (req, res) => {
       res.json({ fulfillmentText });
       if (intent) {
         console.log(`  Intent: ${intent.displayName}`);
+        chatbase
+          .newMessage()
+          .setMessage(fulfillmentText)
+          .send()
+          .catch(e => console.error(e));
       } else {
+        chatbase
+          .newMessage()
+          .setAsNotHandled()
+          .setMessage(fulfillmentText)
+          .send()
+          .catch(e => console.error(e));
         console.log('No intent matched.');
       }
     })
