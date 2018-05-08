@@ -12,7 +12,9 @@ dialogflow 的 agent 使用 GCP project，fulfillment 使用 GCP 的 cloud funct
 
 那能否不使用 GCP 的 cloud function，部署自己的 webhook，这样就可以在 webhook 中对第三方服务发起请求。
 
-这是一个部署在 heroku 上的 nodejs webhook 应用程序，也就是 dialogflow 的 fulfillment
+这是一个部署在 heroku 上的 nodejs webhook 应用程序，也就是 dialogflow 的 fulfillment。
+
+**注意：heroku 免费用户部署的应用程序，在 30 分钟不活动后，将被停止运行**
 
 ![fulfillment](https://ws2.sinaimg.cn/large/006tKfTcgy1fqzlmeah6wj31kw0tvgp7.jpg)
 
