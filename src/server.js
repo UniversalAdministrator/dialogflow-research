@@ -40,6 +40,7 @@ app.get('/', (req, res) => {
 // How's the weather in Denver tomorrow
 app.post('/query', (req, res) => {
   const { query } = req.body;
+  let data = '';
 
   const request = {
     session: sessionPath,
@@ -58,26 +59,26 @@ app.post('/query', (req, res) => {
       const { queryText, fulfillmentText, intent } = queryResult;
       console.log(`  Query: ${queryText}`);
       console.log(`  Response: ${fulfillmentText}`);
+      data = fulfillmentText;
 
       if (intent) {
         console.log(`  Intent: ${intent.displayName}`);
-        chatbase
+        return chatbase
           .newMessage()
           .setIntent(intent.displayName)
           .setMessage(fulfillmentText)
-          .send()
-          .catch(e => console.error(e));
-      } else {
-        console.log('No intent matched.');
-        chatbase
-          .newMessage()
-          .setAsNotHandled()
-          .setMessage(fulfillmentText)
-          .send()
-          .catch(e => console.error(e));
+          .send();
       }
-
-      res.json({ fulfillmentText });
+      console.log('No intent matched.');
+      return chatbase
+        .newMessage()
+        .setAsNotHandled()
+        .setMessage(fulfillmentText)
+        .send();
+    })
+    .then(() => {
+      console.log('send fulfillmentText');
+      res.json({ fulfillmentText: data });
     })
     .catch(err => {
       console.error(err);
