@@ -6,6 +6,12 @@ Dialogflow 是一款企业级 NLU 平台，可让开发人员轻松设计并将�
 
 ## Introduction
 
+dialogflow 的 agent 使用 GCP project，fulfillment 使用 GCP 的 cloud function，但是 GCP 的 cloud function 需要开启结算功能，才能在 cloud function 中对第三方服务发起请求：
+
+![](https://ws1.sinaimg.cn/large/006tKfTcgy1fr3smudqj6j31kw02w3yk.jpg)
+
+那能否不使用 GCP 的 cloud function，部署自己的 webhook，这样就可以在 webhook 中对第三方服务发起请求。
+
 这是一个部署在 heroku 上的 nodejs webhook 应用程序，也就是 dialogflow 的 fulfillment
 
 ![fulfillment](https://ws2.sinaimg.cn/large/006tKfTcgy1fqzlmeah6wj31kw0tvgp7.jpg)
