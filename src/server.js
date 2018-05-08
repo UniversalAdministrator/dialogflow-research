@@ -59,21 +59,25 @@ app.post('/query', (req, res) => {
       console.log(`  Query: ${queryText}`);
       console.log(`  Response: ${fulfillmentText}`);
 
-      res.json({ fulfillmentText });
       if (intent) {
         console.log(`  Intent: ${intent.displayName}`);
-        return chatbase
+        chatbase
           .newMessage()
           .setIntent(intent.displayName)
           .setMessage(fulfillmentText)
-          .send();
+          .send()
+          .catch(e => console.error(e));
+      } else {
+        console.log('No intent matched.');
+        chatbase
+          .newMessage()
+          .setAsNotHandled()
+          .setMessage(fulfillmentText)
+          .send()
+          .catch(e => console.error(e));
       }
-      console.log('No intent matched.');
-      return chatbase
-        .newMessage()
-        .setAsNotHandled()
-        .setMessage(fulfillmentText)
-        .send();
+
+      res.json({ fulfillmentText });
     })
     .catch(err => {
       console.error(err);
