@@ -21,7 +21,11 @@ const sessionClient = new dialogflow.SessionsClient({
 });
 const sessionPath = sessionClient.sessionPath(projectId, sessionId);
 
-chatbase.setApiKey(chatbaseApiKey).setPlatform('dialogflow');
+chatbase
+  .setApiKey(chatbaseApiKey)
+  .setPlatform('dialogflow')
+  .setUserId('some-unique-user-id')
+  .setVersion('1.0');
 
 app.use(bodyParser.json(), bodyParser.urlencoded({ extended: false }));
 
