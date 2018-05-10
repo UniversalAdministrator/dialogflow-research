@@ -4,7 +4,7 @@
   "description": "dialogflow research",
   "main": "src/server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "NODE_ENV=test mocha ./src/__tests__/**/*.spec.js --timeout=15000",
     "start": "node src/server.js"
   },
   "engines": {
@@ -22,17 +22,21 @@
   },
   "homepage": "https://github.com/mrdulin/dialogflow-research#readme",
   "devDependencies": {
+    "chai": "^4.1.2",
     "eslint": "^4.19.1",
     "eslint-config-airbnb-base": "^12.1.0",
-    "eslint-plugin-import": "^2.9.0"
+    "eslint-plugin-import": "^2.9.0",
+    "mocha": "^5.1.1"
   },
   "dependencies": {
     "@google-cloud/storage": "^1.6.0",
     "@google/chatbase": "^1.1.1",
     "body-parser": "^1.18.2",
     "dialogflow": "^0.3.0",
+    "dialogflow-fulfillment": "^0.3.0-beta.2",
     "express": "^4.16.3",
     "request": "^2.85.0",
-    "request-promise": "^4.2.2"
+    "request-promise": "^4.2.2",
+    "uuid": "^3.2.1"
   }
 }

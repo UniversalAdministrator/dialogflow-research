@@ -1,0 +1,1 @@
+curl -X POST -H "Content-Type: application/json; charset=utf-8" -H "Authorization: Bearer 5f8a7dc61bad4030b74e1efc0c097585" "https://api.dialogflow.com/api/query?v=20150910" --data "{'event':{'name': 'custom_event', 'data': {'name': 'Sam'}},'timezone':'America/New_York','lang':'en','sessionId':'1321321'}"

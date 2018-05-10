@@ -34,6 +34,12 @@ dialogflow 测试控制台 + webhook 流程： 用户在 dialogflow 的测试控
 
 本应用程序路由 + dialogflow node.js client + webhook 流程：用户在表单中输入"How's the weather in Denver tomorrow"，提交表单到`/query` ==> 构造入参传入 sessionClient.detectIntent 方法，进行意图检测 ==> 发送 POST 请求（带着日期，城市等参数）到 fulfillment 的部署在 heroku 上的 webhook ==> 触发 webhook，提取日期，城市参数，将这些参数作为查询字符串调用第三方天气服务，获取天气信息 ==> 在`/action`路由中调用`res.json()`方法将获取的天气信息返回 => **sessionClient.detectIntent()方法返回的 promise resolve 或 reject，then 方法带的数据是`/action`路由中`res.json()`返回的数据**
 
+## world weather service
+
+免费账户，每天的 api 调用次数最大限制是 500 次
+
+![](https://ws2.sinaimg.cn/large/006tKfTcgy1fr61upwzlcj31kw307wlp.jpg)
+
 ## GCP
 
 本项目 GCP web 控制台地址： https://console.cloud.google.com/home/dashboard?project=weather-f549d&folder&organizationId

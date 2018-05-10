@@ -1,28 +1,26 @@
 const express = require('express');
 const dialogflow = require('dialogflow');
+const { WebhookClient } = require('dialogflow-fulfillment');
 const bodyParser = require('body-parser');
 const path = require('path');
 const chatbase = require('@google/chatbase');
+const uuidv4 = require('uuid/v4');
 
 const weatherService = require('./weather.service');
+const { config } = require('./config');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
-
-const projectId = 'weather-f549d';
-const sessionId = 'quickstart-session-id';
-const chatbaseApiKey = '0dd0c7e2-9ca6-46f5-b540-9c8e24c46fca';
-
-const languageCode = 'en-US';
+const sessionId = uuidv4();
 
 // https://github.com/dialogflow/dialogflow-nodejs-client-v2/blob/master/src/v2/sessions_client.js
 const sessionClient = new dialogflow.SessionsClient({
   keyFilename: path.resolve(__dirname, '../weather-f1f38a2189f9.json')
 });
-const sessionPath = sessionClient.sessionPath(projectId, sessionId);
+const sessionPath = sessionClient.sessionPath(config.projectId, sessionId);
 
 chatbase
-  .setApiKey(chatbaseApiKey)
+  .setApiKey(config.chatbaseApiKey)
   .setPlatform('dialogflow')
   .setUserId('some-unique-user-id')
   .setVersion('1.0');
@@ -47,7 +45,7 @@ app.post('/query', (req, res) => {
     queryInput: {
       text: {
         text: query,
-        languageCode
+        languageCode: config.languageCode
       }
     }
   };
@@ -105,6 +103,18 @@ app.post('/action', (req, res) => {
     });
 });
 
-app.listen(PORT, () => {
-  console.log(`Server is listening on http://localhost:${PORT}`);
-});
+function start(done) {
+  return app.listen(PORT, () => {
+    if (done) done();
+    console.log(`Server is listening on http://localhost:${PORT}`);
+  });
+}
+
+if (process.env.NODE_ENV !== 'test') {
+  start();
+}
+
+module.exports = {
+  start,
+  sessionClient
+};
