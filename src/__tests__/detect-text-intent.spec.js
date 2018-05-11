@@ -66,10 +66,10 @@ describe('detect intent test suites', () => {
         return sessionClient.detectIntent(request);
       })
       .then(response => {
-        console.log('response: ', response);
+        // console.log('response: ', response);
         const res = response[0];
-        console.log('parameters: ', res.queryResult.parameters);
-        console.log('intent: ', res.queryResult.intent);
+        // console.log('parameters: ', res.queryResult.parameters);
+        // console.log('intent: ', res.queryResult.intent);
         expect(0).to.be.eql(0);
       });
   });

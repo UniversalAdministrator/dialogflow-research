@@ -140,3 +140,5 @@ https://dialogflow.com/docs/getting-started/basics
 https://codelabs.developers.google.com/codelabs/chatbase/index.html#2
 
 https://dialogflow.com/docs/reference/api-v2/rpc/google.cloud.dialogflow.v2#google.cloud.dialogflow.v2.Intent
+
+https://github.com/dialogflow/dialogflow-nodejs-client-v2
