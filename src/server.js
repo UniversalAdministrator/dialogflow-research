@@ -103,6 +103,21 @@ app.post('/action', (req, res) => {
     });
 });
 
+app.post('/eventTriggerIntent', (req, res) => {
+  console.log('eventTriggerIntent');
+  res.json({
+    fulfillmentText: 'test event trigger intent',
+    followupEventInput: {
+      name: 'eventName',
+      parameters: {
+        name: 'mrdulin',
+        job: 'developer'
+      },
+      languageCode: 'en'
+    }
+  });
+});
+
 function start(done) {
   return app.listen(PORT, () => {
     if (done) done();
