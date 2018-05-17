@@ -1,11 +1,7 @@
-const {
-  expect
-} = require('chai');
+const { expect } = require('chai');
 const request = require('request-promise');
 const uuidv4 = require('uuid/v4');
-const {
-  config
-} = require('../../config');
+const { config } = require('../../config');
 const util = require('util');
 
 // https://dialogflow.com/docs/reference/agent/
@@ -48,21 +44,22 @@ describe('/query test suites', () => {
       query: 'weather',
       sessionId
     };
-    return rp('/query', qs).then(res => {
-      const nextQs = {
-        contexts: res.result.contexts,
-        query: 'shanghai',
-        sessionId
-      };
-      return rp('/query', nextQs);
-    }).then((res) => {
-      console.log(util.inspect(res, false, 5));
-      expect(res.sessionId).to.be.eql(sessionId);
-    });
+    return rp('/query', qs)
+      .then(res => {
+        const nextQs = {
+          contexts: res.result.contexts,
+          query: 'shanghai',
+          sessionId
+        };
+        return rp('/query', nextQs);
+      })
+      .then(res => {
+        // console.log(util.inspect(res, false, 5));
+        expect(res.sessionId).to.be.eql(sessionId);
+      });
   });
 
   it('should get correct response from dialogflow when send a query with location', () => {
-
     const qs = {
       query: 'weather in shanghai',
       sessionId
@@ -77,8 +74,27 @@ describe('/query test suites', () => {
     });
   });
 
+  it('should get correct response from dialogflow when send a query with contexts', () => {
+    const contexts = [
+      {
+        name: `projects/${config.projectId}/agent/sessions/${sessionId}/contexts/me`,
+        lifespanCount: 5,
+        parameters: {
+          name: 'mrdulin'
+        }
+      }
+    ];
+    const qs = {
+      query: 'who am I',
+      sessionId,
+      contexts
+    };
+    return rp('/query', qs).then(res => {
+      // console.log(res);
+      expect(res.sessionId).to.be.eql(sessionId);
+      expect(res.status).to.have.property('code', 200);
+      expect(res.status).to.have.property('errorType', 'success');
+      expect(res.result.fulfillment.speech).to.be.equal('Your name is mrdulin.');
+    });
+  });
 });
-
-
-// bank_account_num_complete
-// bank_info

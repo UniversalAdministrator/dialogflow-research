@@ -106,6 +106,7 @@ app.post('/action', (req, res) => {
 app.post('/eventTriggerIntent', (req, res) => {
   console.log('eventTriggerIntent');
   res.json({
+    // 如果定义了fulfillmentText，则在dialogflow中的response会优先使用fulfillmentText，然后是在intent中定义的response
     // fulfillmentText: 'test event trigger intent',
     followupEventInput: {
       name: 'eventName',
