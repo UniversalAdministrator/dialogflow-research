@@ -106,7 +106,7 @@ app.post('/action', (req, res) => {
 app.post('/eventTriggerIntent', (req, res) => {
   console.log('eventTriggerIntent');
   res.json({
-    fulfillmentText: 'test event trigger intent',
+    // fulfillmentText: 'test event trigger intent',
     followupEventInput: {
       name: 'eventName',
       parameters: {
