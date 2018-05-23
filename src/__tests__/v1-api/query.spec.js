@@ -1,25 +1,9 @@
 const { expect } = require('chai');
-const request = require('request-promise');
+
 const uuidv4 = require('uuid/v4');
 const { config } = require('../../config');
 const util = require('util');
-
-// https://dialogflow.com/docs/reference/agent/
-function rp(uri, qs) {
-  const options = {
-    uri: config.API_V1_URL + uri,
-    headers: {
-      Authorization: `Bearer ${config.clientAccessToken}`
-    },
-    qs: {
-      v: 20170712,
-      ...qs,
-      lang: 'en'
-    },
-    json: true
-  };
-  return request(options);
-}
+const { rp } = require('../../util');
 
 const sessionId = uuidv4();
 
